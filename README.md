@@ -16,13 +16,13 @@ Sistema em versão BETA, com os seguintes recursos disponíveis:
 
 <h2>Projetos</h2>
 
-<h3>Migracao.ComparadorBasesLegadas.Site</h3>
+<h3>DBMigration.CompareSimilarDBs.Site</h3>
 Site do gerenciador de comparação de bases, em ASP.NET MVC e .NET 5.
-<h3>Migracao.ComparadorBasesLegadas.Data</h3>
-Projeto de dados, contendo o contexto e classes modelo.
-<h3>Migracao.ComparadorBasesLegadas.Impanta</h3>
+<h3>DBMigration.CompareSimilarDBs.Data</h3>
+Camada de persistência, contendo o contexto e classes modelo.
+<h3>DBMigration.CompareSimilarDBs.Impanta</h3>
 Projeto vazio do tipo SQL Server Database Project, utilizado na compilação para comparação das bases.
-<h3>Migracao.ComparadorBasesLegadas.Service</h3>
+<h3>DBMigration.CompareSimilarDBs.Service</h3>
 Projeto do tipo Service, criado para rodar as comparações como serviço do windows, apenas iniciado, sem implementação funcional até o momento.
 <br/>
 <h2>Dependências principais</h2>
@@ -47,7 +47,7 @@ Documentação: https://github.com/ClosedXML/ClosedXML
 Na implantação informar no arquivo de configuração (appsettings.json) as seguintes 'tags':
 <ol>
 <li><b>DirectoryDACPAC</b> - Caminho onde serão armazenados os arquivos DACPACs</li>
-<li><b>SchemaCompareProjectCSProjFil</b>e - Caminho para o arquivo de projeto (.csproj) de um SQL Server Database Project que será utilizado na comparação. Pode ser usado o projeto (vazio) Migracao.ComparadorBasesLegadas.Impanta deste repositório.</li>
+<li><b>SchemaCompareProjectCSProjFil</b>e - Caminho para o arquivo de projeto (.csproj) de um SQL Server Database Project que será utilizado na comparação. Pode ser usado o projeto (vazio) DBMigration.CompareSimilarDBs.Impanta deste repositório.</li>
 <li><b>MSBuildExeFile</b> - Caminho para o executável do MSBuild, previamenteo instalado no servidor, utilizado para compilar a comparação da bases</li>
 <li><b>SqlPackage</b> - Caminho para o executável do SqlPackage previamente instalado no servidor, utilizado para gerar os arquivos DACPACs</li>
 </ol>
