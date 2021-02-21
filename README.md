@@ -19,7 +19,7 @@ Sistema em versão BETA, com os seguintes recursos disponíveis:
 <h3>DBMigration.CompareSimilarDBs.Site</h3>
 Site do gerenciador de comparação de bases, em ASP.NET MVC e .NET 5.
 <h3>DBMigration.CompareSimilarDBs.Data</h3>
-Projeto de dados, contendo o contexto e classes modelo.
+Camada de persistência, contendo o contexto e classes modelo.
 <h3>DBMigration.CompareSimilarDBs.Impanta</h3>
 Projeto vazio do tipo SQL Server Database Project, utilizado na compilação para comparação das bases.
 <h3>DBMigration.CompareSimilarDBs.Service</h3>
