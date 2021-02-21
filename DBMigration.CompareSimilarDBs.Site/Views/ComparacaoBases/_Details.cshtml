@@ -1,0 +1,67 @@
+﻿@model DBMigration.CompareSimilarDBs.Data.ComparacaoBases
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BaseFonteNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BaseFonteNavigation.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BaseAlvoNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BaseAlvoNavigation.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StatusComparacao)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StatusComparacao)
+        </dd>
+        @if (Model.StatusComparacao == DBMigration.CompareSimilarDBs.Data.StatusComparacao.Concluida)
+        {
+            <dt class="col-sm-2">
+                Tabelas inexistentes
+            </dt>
+            <dd class="col-sm-10">
+                @ViewBag.TabelasAdicionadas (Existem na base de referência mas não na base alvo)
+            </dd>
+            <dt class="col-sm-2">
+                Tabelas diferentes
+            </dt>
+            <dd class="col-sm-10">
+                @ViewBag.TabelasAlteradas (Tabelas com mais ou menos colunas)
+            </dd>
+            <dt class="col-sm-2">
+                Tabelas novas
+            </dt>
+            <dd class="col-sm-10">
+                @ViewBag.TabelasExcluidas (Existem na base alvo mas não existem na base de referência)
+            </dd>
+            <dt class="col-sm-2">
+                Colunas inexistentes
+            </dt>
+            <dd class="col-sm-10">
+                @ViewBag.ColunasAdicionadas (Existem na base de referência mas não na base alvo)
+            </dd>
+            <dt class="col-sm-2">
+                Colunas novas
+            </dt>
+            <dd class="col-sm-10">
+                @ViewBag.ColunasExcluidas (Existem na base alvo mas não existem na base de referência)
+            </dd>
+        }
+        else if (Model.StatusComparacao == DBMigration.CompareSimilarDBs.Data.StatusComparacao.Falha)
+        {
+            <dt class="col-sm-2">
+                Mensagem de falha
+            </dt>
+            <dd class="col-sm-10">
+                @Model.MensagemFalha
+            </dd>
+        }
+    </dl>
+    <a onclick="window.history.back();" href="#"> <i class="fas fa-arrow-left" title="Voltar"></i></a> | <a style="font-size: 1.5em;" asp-action="GerarRelatorioTabelas" asp-route-id="@Model.Id"><i class="far fa-file-excel" title="Gerar relatório tabelas"></i> Gerar relatório</a>
+</div>

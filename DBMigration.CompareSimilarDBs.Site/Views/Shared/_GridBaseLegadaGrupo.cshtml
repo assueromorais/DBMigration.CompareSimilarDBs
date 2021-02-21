@@ -1,0 +1,121 @@
+﻿@model DBMigration.CompareSimilarDBs.Data.BaseLegadaGrupo
+@using DBMigration.CompareSimilarDBs.Data
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th colspan="6">
+                <span class="h2">@Model.NomeGrupo (@Model.BaseLegada.Count())</span>
+                <a href="#" onclick="EditarGrupo(@Model.Id);" title="Editar grupo">
+                    <i class="far fa-edit"></i>
+                </a>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BaseLegada.FirstOrDefault().Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BaseLegada.FirstOrDefault().StatusMigracao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BaseLegada.FirstOrDefault().LinkRespostorio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BaseLegada.FirstOrDefault().Tamanho)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BaseLegada.FirstOrDefault().DataUltimaEstatistica)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (BaseLegada baseLegada in Model.BaseLegada)
+        {
+            <tr class="@Html.GetCssClass(baseLegada.StatusMigracaoNavigation?.Nome)">
+                <td>
+                    <a title="Detalhes" href="#" onclick="DetalhesBase(@baseLegada.Id);">
+                        @Html.DisplayFor(modelItem => baseLegada.Nome)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => baseLegada.StatusMigracaoNavigation.Nome)
+                </td>
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(baseLegada.LinkRespostorio))
+                    {
+                        <a href="@baseLegada.LinkRespostorio" target="_blank">Repositório</a>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => baseLegada.Tamanho)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => baseLegada.DataUltimaEstatistica)
+                </td>
+                <td>
+                    <a href="#" onclick="EditarBase(@baseLegada.Id);" title="Editar">
+                        <i class="far fa-edit"></i>
+                    </a> |
+                    <a href="#" onclick="ExcluirBase(@baseLegada.Id);" title="Excluir">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6">Total: @Model.BaseLegada.Count()</td>
+        </tr>
+    </tfoot>
+</table>
+<div class="modal fade" id="modal-detalhes-base">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Base legada</h3>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="baseDetails" src='' width="100%" height="350" frameBorder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-editar-base">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editando base legada</h3>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="baseEditar" src='' width="100%" height="310" frameBorder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-delete-base">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Excluir registro da base legada?</h3>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="baseDelete" src='' width="100%" height="350" frameBorder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>

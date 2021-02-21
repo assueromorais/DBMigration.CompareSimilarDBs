@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[Web_CursosEventosRealizado] (
+    [IdWeb_CursoEventoRealizado] INT            IDENTITY (1, 1) NOT NULL,
+    [IdCursoEventoRealizado]     INT            NOT NULL,
+    [IdProfissional]             INT            NULL,
+    [IdCursoEvento]              INT            NULL,
+    [IdPessoa]                   INT            NULL,
+    [IdSituacaoCurso]            INT            NULL,
+    [IdEspecialidade]            INT            NULL,
+    [TipoDocumento]              VARCHAR (1)    NULL,
+    [DataExpedicaoDocumento]     DATETIME       NULL,
+    [Duracao]                    FLOAT (53)     NULL,
+    [UnidadeDuracao]             VARCHAR (1)    NULL,
+    [PeriodoRealizacao]          VARCHAR (20)   NULL,
+    [DataConclusao]              DATETIME       NULL,
+    [DataColacaoGrau]            DATETIME       NULL,
+    [Observacao]                 VARCHAR (8000) NULL,
+    [E_CursoRegistro]            BIT            NULL,
+    [E_Curso]                    BIT            NULL,
+    [AtualizacaoWeb]             VARCHAR (5000) NULL,
+    [IndAtualizacao]             BIT            NULL,
+    [DataBaixa]                  DATETIME       NULL,
+    [DataAtualizacao]            DATETIME       NULL,
+    [idSiscafWeb]                INT            NULL,
+    [IdPessoaCampus]             INT            NULL,
+    [EnsinoDistancia]            BIT            CONSTRAINT [DF__CursosEve__Ensin__6675A792_WEB] DEFAULT ((0)) NOT NULL,
+    CONSTRAINT [PK_Web_CursosEventosRealizado] PRIMARY KEY CLUSTERED ([IdWeb_CursoEventoRealizado] ASC)
+);
+

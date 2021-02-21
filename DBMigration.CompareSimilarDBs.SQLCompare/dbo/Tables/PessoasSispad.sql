@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[PessoasSispad] (
+    [IdPessoaSispad]       INT          IDENTITY (1, 1) NOT NULL,
+    [IdPessoa]             INT          NOT NULL,
+    [IdCargo]              INT          NULL,
+    [IdTipoPessoa]         INT          NULL,
+    [IdCidadeOrigemPadrao] INT          NULL,
+    [IdEstadoOrigemPadrao] INT          NULL,
+    [NumPassaporte]        VARCHAR (20) NULL,
+    [IdCentroCusto]        INT          NULL,
+    [IdUnidade]            INT          NULL,
+    [NumRegistro]          VARCHAR (20) NULL,
+    [SalarioBruto]         MONEY        NULL,
+    [IdNivelAutorizacao]   INT          NULL,
+    [CargaHoraria]         INT          NULL,
+    CONSTRAINT [PK_PessoasSispad] PRIMARY KEY CLUSTERED ([IdPessoaSispad] ASC),
+    CONSTRAINT [FK_PessoasSispad_Cargos] FOREIGN KEY ([IdCargo]) REFERENCES [dbo].[Cargos] ([IdCargo]),
+    CONSTRAINT [FK_PessoasSispad_CentroCusto] FOREIGN KEY ([IdCentroCusto]) REFERENCES [dbo].[CentroCustos] ([IdCentroCusto]),
+    CONSTRAINT [FK_PessoasSispad_Cidades] FOREIGN KEY ([IdCidadeOrigemPadrao]) REFERENCES [dbo].[Cidades] ([IdCidade]),
+    CONSTRAINT [FK_PessoasSispad_Estados] FOREIGN KEY ([IdEstadoOrigemPadrao]) REFERENCES [dbo].[Estados] ([IdEstado]),
+    CONSTRAINT [FK_PessoasSispad_NiveisAutorizacao] FOREIGN KEY ([IdNivelAutorizacao]) REFERENCES [dbo].[NiveisAutorizacao] ([IdNivelAutorizacao]),
+    CONSTRAINT [FK_PessoasSispad_Pessoas] FOREIGN KEY ([IdPessoa]) REFERENCES [dbo].[Pessoas] ([IdPessoa]),
+    CONSTRAINT [FK_PessoasSispad_TiposPessoa] FOREIGN KEY ([IdTipoPessoa]) REFERENCES [dbo].[TiposPessoa] ([IdTipoPessoa]),
+    CONSTRAINT [FK_PessoasSispad_Unidades] FOREIGN KEY ([IdUnidade]) REFERENCES [dbo].[Unidades] ([IdUnidade])
+);
+

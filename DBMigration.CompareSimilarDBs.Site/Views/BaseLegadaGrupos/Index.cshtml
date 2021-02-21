@@ -1,0 +1,194 @@
+﻿@model IEnumerable<DBMigration.CompareSimilarDBs.Data.BaseLegadaGrupo>
+
+@{
+    ViewData["Title"] = "Grupo Bases legadas";
+}
+
+<h1 class="display-4">Grupo de bases legadas</h1>
+<p>
+    <a href="#" onclick="CriarGrupo();">Novo grupo</a>
+    <div class="alert alert-secondary" role="alert">
+        Permite criar agrupamentos das bases legadas, ex.: bases dos clientes CFP, bases dos clientes CORECON, etc.<br />
+        Comparações são feitas entre as bases do mesmo grupo.
+    </div>
+    @if (!string.IsNullOrWhiteSpace(TempData["MensagemSucesso"]?.ToString()))
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+    @if (!string.IsNullOrWhiteSpace(TempData["MensagemFalha"]?.ToString()))
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["MensagemFalha"]
+        </div>
+    }
+</p>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NomeGrupo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConnectionStringLegadas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrefixoNomeBaseLegadas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RegexNomeTabelasDescartar)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomeGrupo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConnectionStringLegadas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrefixoNomeBaseLegadas)
+                </td>
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(item.RegexNomeTabelasDescartar))
+                    {
+                        @Html.DisplayFor(modelItem => item.RegexNomeTabelasDescartar)
+                    }
+                </td>
+                <td>
+                    <a href="#" onclick="EditarGrupo(@item.Id);" title="Editar">
+                        <i class="far fa-edit"></i>
+                    </a> |
+                    <a title="Detalhes" href="#" onclick="DetalhesGrupo(@item.Id);">
+                        <i class="fas fa-info-circle"></i>
+                    </a> |
+                    <a href="#" onclick="ExcluirGrupo(@item.Id);" title="Excluir">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6">Total: @Model.Count()</td>
+        </tr>
+    </tfoot>
+</table>
+
+@if (Model.Count() == 0)
+{
+    <div class="alert alert-info" role="alert">
+        Nennhum grupo cadastrado.
+    </div>
+}
+<div class="modal fade" id="modal-detalhes-base">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="baseDetails" src='' width="100%" height="410" frameBorder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-detalhes-grupo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Grupo de bases legadas</h3>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="grupoDetails" src='' width="100%" height="250" frameBorder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-create-grupo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Novo grupo</h3>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="grupoCreate" src='' width="100%" height="350" frameBorder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-editar-grupo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editando grupo</h3>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="grupoEditar" src='' width="100%" height="350" frameBorder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-delete-grupo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar exclusão desse grupo de bases?</h3>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="grupoDelete" src='' width="100%" height="250" frameBorder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $(".modal-content").draggable();
+    })
+        function CriarGrupo() {
+        $('#grupoCreate').removeAttr('src').attr('src', '@Url.Action("Create", "BaseLegadaGrupos")');
+        $('#modal-create-grupo').modal();
+    }
+    function DetalhesGrupo(id) {
+        $('#grupoDetails').removeAttr('src').attr('src', '@Url.Action("Details", "BaseLegadaGrupos")/' +id);
+        $('#modal-detalhes-grupo').modal();
+    }
+    function EditarGrupo(id) {
+        $('#grupoEditar').removeAttr('src').attr('src', '@Url.Action("Edit", "BaseLegadaGrupos")/'+id);
+        $('#modal-editar-grupo').modal();
+    }
+    function ExcluirGrupo(id) {
+        $('#grupoDelete').removeAttr('src').attr('src', '@Url.Action("Delete", "BaseLegadaGrupos")/' + id).on('load', function () { $('#modal-grupo-comparacao').modal('hide');});
+        $('#modal-delete-grupo').modal();
+    }
+    </script>
+}

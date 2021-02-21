@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[Renegociacao_Avulsa_Parcela_Renegociacao] (
+    [IdRenegociacao]        INT          NOT NULL,
+    [NumeroParcela]         SMALLINT     NOT NULL,
+    [DataVencimento]        DATETIME     NULL,
+    [ValorParcela]          MONEY        NULL,
+    [ValorMultaParcela]     MONEY        NULL,
+    [ValorJurosParcela]     MONEY        NULL,
+    [ValorAcrescimoParcela] MONEY        NULL,
+    [ValorDescontoParcela]  MONEY        NULL,
+    [IdProcedimentoAtraso]  INT          NULL,
+    [IdTipoPagamento]       INT          NULL,
+    [DocumentoPgto]         VARCHAR (20) NULL,
+    [DataDeposito]          DATETIME     NULL,
+    [DataCredito]           DATETIME     NULL,
+    [NumeroAutorizacao]     VARCHAR (20) NULL,
+    [CodBanco]              VARCHAR (3)  NULL,
+    [CodAgencia]            VARCHAR (4)  NULL,
+    [CodOperacao]           VARCHAR (3)  NULL,
+    [CodCC_Conv_Ced]        VARCHAR (16) NULL,
+    [DespAdvocaticias]      MONEY        NULL,
+    [CustasJudiciais]       MONEY        NULL,
+    [CustasPrevias]         MONEY        NULL,
+    CONSTRAINT [PK_Renegociacao_Avulsa_Parcela_Renegociacao] PRIMARY KEY CLUSTERED ([IdRenegociacao] ASC, [NumeroParcela] ASC)
+);
+

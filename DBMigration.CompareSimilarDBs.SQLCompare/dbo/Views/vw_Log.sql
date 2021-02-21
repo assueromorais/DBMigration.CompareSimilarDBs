@@ -1,0 +1,1 @@
+﻿CREATE VIEW [dbo].[vw_Log] AS SELECT L.Data, L.Sistema, L.Usuario, L.Tabela, L.TipoOperacao, L.Conteudo, L.Conteudo2, L.NomeBanco FROM [ImplantaLog].[dbo].[Log] L  WHERE ((L.NomeBanco = DB_NAME()) OR (L.NomeBanco IS NULL) OR (L.NomeBanco = '')) 

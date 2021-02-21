@@ -1,0 +1,26 @@
+﻿CREATE TABLE [dbo].[Web_ComposicoesEmissao] (
+    [IdWeb_ComposicoesEmissao] INT            IDENTITY (1, 1) NOT NULL,
+    [IdComposicaoEmissao]      INT            NOT NULL,
+    [IdDetalheEmissao]         INT            NOT NULL,
+    [IdDebito]                 INT            NULL,
+    [IdMoedaDevida]            INT            NULL,
+    [Sigladebito]              VARCHAR (10)   NOT NULL,
+    [NumeroParcela]            INT            NULL,
+    [DataReferenciaDebito]     VARCHAR (8)    NULL,
+    [DataVencimentoDebito]     DATETIME       NULL,
+    [ValorDevido]              MONEY          NULL,
+    [ValorPrincipal]           MONEY          NULL,
+    [ValorAtualizacao]         MONEY          NULL,
+    [ValorMulta]               MONEY          NULL,
+    [ValorJuros]               MONEY          NULL,
+    [ValorDespBco]             MONEY          NULL,
+    [ValorDespAdv]             MONEY          NULL,
+    [ValorDespPostais]         MONEY          NULL,
+    [AtualizacaoWeb]           VARCHAR (5000) NULL,
+    [IndAtualizacao]           BIT            NULL,
+    [DataBaixa]                DATETIME       NULL,
+    [IdProcedimento]           INT            NULL,
+    [RegistraLog]              BIT            CONSTRAINT [DF__Composico__Regis__0717E911_WEB] DEFAULT ((1)) NULL,
+    [ValorDesconto]            MONEY          NULL
+);
+

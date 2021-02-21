@@ -1,0 +1,11 @@
+﻿
+
+CREATE PROCEDURE dbo.sp_DataServidor
+AS
+SET NOCOUNT ON
+SELECT Data = GETDATE()
+SET NOCOUNT OFF
+
+
+
+

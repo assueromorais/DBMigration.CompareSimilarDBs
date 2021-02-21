@@ -1,0 +1,42 @@
+﻿@model DBMigration.CompareSimilarDBs.Data.BaseLegadaGrupo
+
+@{
+    ViewData["Title"] = "Editar";
+    Layout = "_LayoutSeco";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="NomeGrupo" class="control-label"></label>
+                <input asp-for="NomeGrupo" class="form-control" />
+                <span asp-validation-for="NomeGrupo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConnectionStringLegadas" class="control-label"></label>
+                <input asp-for="ConnectionStringLegadas" class="form-control" />
+                <span asp-validation-for="ConnectionStringLegadas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrefixoNomeBaseLegadas" class="control-label"></label>
+                <input asp-for="PrefixoNomeBaseLegadas" class="form-control" />
+                <span asp-validation-for="PrefixoNomeBaseLegadas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RegexNomeTabelasDescartar" class="control-label"></label>
+                <input asp-for="RegexNomeTabelasDescartar" class="form-control" />
+                <span asp-validation-for="RegexNomeTabelasDescartar" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

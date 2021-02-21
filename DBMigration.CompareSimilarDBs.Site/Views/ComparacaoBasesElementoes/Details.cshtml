@@ -1,0 +1,44 @@
+﻿@model DBMigration.CompareSimilarDBs.Data.ComparacaoBasesElemento
+
+@{
+    ViewData["Title"] = "Visualizar";
+    Layout = "_LayoutSeco";
+}
+
+<h1>Elemento de comparação de base</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TipoElemento)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TipoElemento)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TipoOcorrencia)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TipoOcorrencia)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComparacaoBasesNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComparacaoBasesNavigation.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElementoPaiNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElementoPaiNavigation.TipoElemento)
+        </dd>
+        <dt class="col-sm-2">
+            XML de comparação (SCMP)
+        </dt>
+        <dt class="col-sm-2">
+            <a href="#">Visualizar</a>
+        </dt>
+    </dl>
+</div>

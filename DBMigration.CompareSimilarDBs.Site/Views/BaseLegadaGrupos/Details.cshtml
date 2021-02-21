@@ -1,0 +1,40 @@
+﻿@model DBMigration.CompareSimilarDBs.Data.BaseLegadaGrupo
+
+@{
+    ViewData["Title"] = "Visualizar";
+    Layout = "_LayoutSeco";
+}
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NomeGrupo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NomeGrupo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ConnectionStringLegadas)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ConnectionStringLegadas)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PrefixoNomeBaseLegadas)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PrefixoNomeBaseLegadas)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RegexNomeTabelasDescartar)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RegexNomeTabelasDescartar)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">
+        <i class="far fa-edit"></i>
+    </a>
+</div>

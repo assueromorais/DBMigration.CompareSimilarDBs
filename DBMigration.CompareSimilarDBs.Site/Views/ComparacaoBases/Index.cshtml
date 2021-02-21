@@ -1,0 +1,198 @@
+﻿@model IEnumerable<DBMigration.CompareSimilarDBs.Data.ComparacaoBases>
+@{
+    ViewData["Title"] = "Comparações";
+}
+
+<h1 class="display-4">Comparações</h1>
+<p>
+    <a href="#" onclick="CriarComparacao();">Nova comparação</a> |
+    <a asp-action="CompareAllCombinations">Procurar e criar comparações faltantes</a>
+    <div class="alert alert-secondary" role="alert">
+        Comparações são feitas apenas em bases do mesmo grupo, e verificam apenas diferenças de tabelas e colunas.
+    </div>
+    @if (!string.IsNullOrWhiteSpace(TempData["MensagemSucesso"]?.ToString()))
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+    @if (!string.IsNullOrWhiteSpace(TempData["MensagemFalha"]?.ToString()))
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["MensagemFalha"]
+        </div>
+    }
+</p>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.BaseFonteNavigation), "Index", new { sortOrder = ViewBag.FonteSortParm })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.BaseAlvoNavigation), "Index", new { sortOrder = ViewBag.AlvoSortParm })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.StatusComparacao), "Index", new { sortOrder = ViewBag.StatusSortParm })
+            </th>
+            <th>
+                Tempo (min)
+            </th>
+            <th>
+                Comparado em
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="@Html.GetCssClass(item.StatusComparacao)">
+                <td>
+                    <a title="Detalhes" href="#" onclick="DetalhesBase(@item.BaseFonte);">
+                        @Html.DisplayFor(modelItem => item.BaseFonteNavigation.Nome)
+                    </a>
+                </td>
+                <td>
+                    <a title="Detalhes" href="#" onclick="DetalhesBase(@item.BaseAlvo);">
+                        @Html.DisplayFor(modelItem => item.BaseAlvoNavigation.Nome)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusComparacao)
+                </td>
+                <td>
+                    @if (item.TempoComparacaoEmMinutos > 0)
+                    {
+                        @Html.DisplayFor(modelItem => item.TempoComparacaoEmMinutos)<span> min.</span>
+                    }
+                    else
+                    {
+                        <span>--</span>
+                    }
+                </td>
+                <td>
+                    @if (item.DataComparacao != DateTime.MinValue)
+                    {
+                        @Html.DisplayFor(modelItem => item.DataComparacao)
+                    }
+                    else
+                    {
+                        <span>--</span>
+                    }
+                </td>
+                <td>
+                    @if (item.StatusComparacao == DBMigration.CompareSimilarDBs.Data.StatusComparacao.Falha)
+                    {
+                        <a asp-action="RefazerComparacao" asp-route-id="@item.Id"><i class="fas fa-redo" title="Re-comparar"></i></a> <span>&#124;</span>
+                    }
+                    <a title="Detalhes" href="#" onclick="DetalhesComparacao(@item.Id);">
+                        <i class="fas fa-info-circle"></i>
+                    </a> |
+                    <a href="#" onclick="Excluir(@item.Id)" title="Excluir">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6">Total: @Model.Count() | Sucesso: @ViewBag.TotalSucesso | Não iniciada: @ViewBag.TotalNaoIniciada | Em andamento: @ViewBag.TotalEmAndamento | Falhas: @ViewBag.TotalFalha</td>
+        </tr>
+    </tfoot>
+</table>
+<div class="modal fade" id="modal-detalhes-base">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Base legada</h3>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="baseDetails" src='' width="100%" height="350" frameBorder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-create-comparacao">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nova comparação entre bases</h3>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="comparacaoCreate" src='' width="100%" height="310" frameBorder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-detalhes-comparacao">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Comparação de bases</h3>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="comparacaoDetails" src='' width="100%" height="450" frameBorder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-delete-comparacao">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Excluir comparação de bases?</h3>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="comparacaoDelete" src='' width="100%" height="150" frameBorder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $(".modal-content").draggable();
+    })
+    function DetalhesBase(id) {
+        $('#baseDetails').removeAttr('src').attr('src', '@Url.Action("Details", "BaseLegadas")/' +id);
+        $('#modal-detalhes-base').modal();
+    }
+     function CriarComparacao() {
+        $('#comparacaoCreate').removeAttr('src').attr('src', '@Url.Action("Create", "ComparacaoBases")');
+         $('#modal-create-comparacao').modal();
+        }
+        function DetalhesComparacao(id) {
+        $('#comparacaoDetails').removeAttr('src').attr('src', '@Url.Action("Details", "ComparacaoBases")/' +id);
+        $('#modal-detalhes-comparacao').modal();
+    }
+    function Excluir(id) {
+        $('#comparacaoDelete').removeAttr('src').attr('src', '@Url.Action("Delete", "ComparacaoBases")/' + id).on('load', function () { $('#modal-delete-comparacao').modal('hide');});
+        $('#modal-delete-comparacao').modal();
+    }
+    </script>
+}
+@if (Model.Count() == 0)
+{
+    <div class="alert alert-info" role="alert">
+        Nennhum registro cadastrado.
+    </div>
+}

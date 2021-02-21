@@ -1,0 +1,80 @@
+﻿@model DBMigration.CompareSimilarDBs.Data.BaseLegada
+
+@{
+    ViewData["Title"] = "Visualizar";
+    Layout = "_LayoutSeco";
+}
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StatusMigracao)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StatusMigracao)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LinkRespostorio)
+        </dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrWhiteSpace(Model.LinkRespostorio))
+            {
+                <a href="@Model.LinkRespostorio" target="_blank">@Model.LinkRespostorio</a>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tamanho)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tamanho)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataUltimaEstatistica)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataUltimaEstatistica)
+        </dd>
+        <dt class="col-sm-2">
+            Comparações
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.TotalComparacoes
+        </dd>
+        <dt class="col-sm-2">
+            Melhor correspondência
+        </dt>
+        <dd class="col-sm-10">
+            <a id="melhor-correspondencia" href="#" title="Visualizar comparação"><image src="/images/load.gif" style="width:16px;height:16px;"></image>&nbsp;&nbsp;Procurando correspondência...</a>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">
+        <i class="far fa-edit"></i>
+    </a>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var baseUrl = (window.location).href;
+            var koopId = baseUrl.substring(baseUrl.lastIndexOf('/') + 1);
+            fetch('/BaseLegadas/MelhorCorrespondencia/' + koopId)
+                .then(response => response.json())
+                .then(data => PreencherMelhorCorrespondencia(data))
+                .catch(error => console.error('Não foi possível encontrar a melhor correspondência.', error));
+        });
+
+        function PreencherMelhorCorrespondencia(melhorCorrespondencia) {
+            if (melhorCorrespondencia.comparacaoBaseID > 0) {
+                $('#melhor-correspondencia').attr('href', '/ComparacaoBases/Details/' + melhorCorrespondencia.comparacaoBaseID).html(melhorCorrespondencia.baseNome);
+            } else {
+                $('#melhor-correspondencia').attr('href', '#').html('Não encontrado');
+            }
+        }
+    </script>
+}
