@@ -1,11 +1,12 @@
 <h2>Visão Geral</h2>
 
-Sistema de apoio á migração de dados.
+Sistema para apoio á migração de dados.
 
 O objetivo é facilitar na identificação das bases que possuem schemas (estrutura de tabelas e colunas) mais parecidos entre si.
 
-Sistema em versão BETA, com os seguintes recursos disponíveis:
+Útil quando há um conjunto de bases de dados (legadas) à serem migradas para bases de dados de mesmo schema (mesmo sistema alvo).
 
+Sistema em versão BETA, com os seguintes recursos disponíveis:
 <ol>
 <li>Cadastro de grupos de bases, com configuração da string de conexão e prefixo do nome das bases legadas.</li>
 <li>Busca das bases legadas</li>
